@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 
 const Contact: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: '',
+    });
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
+    const handleSendMessage = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        // Здесь вам нужно добавить логику отправки данных на сервер
+        // Используйте вашу функцию для отправки данных в API
+
+        console.log('Sending message:', formData);
+        // Пример: await sendMessageToAPI(formData);
+    };
+
     return (
         <Container className="mt-5">
             <h2>Контакты</h2>
@@ -10,20 +31,39 @@ const Contact: React.FC = () => {
                     <Card className="mb-4">
                         <Card.Body>
                             <Card.Title>Свяжитесь с нами</Card.Title>
-                            <Form>
+                            <Form onSubmit={handleSendMessage}>
                                 <Form.Group controlId="formName">
                                     <Form.Label>Ваше Имя</Form.Label>
-                                    <Form.Control type="text" placeholder="Введите ваше имя" />
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Введите ваше имя"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleInputChange}
+                                    />
                                 </Form.Group>
 
                                 <Form.Group controlId="formEmail">
                                     <Form.Label>Email адрес</Form.Label>
-                                    <Form.Control type="email" placeholder="Введите ваш email" />
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Введите ваш email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                    />
                                 </Form.Group>
 
                                 <Form.Group controlId="formMessage">
                                     <Form.Label>Ваше Сообщение</Form.Label>
-                                    <Form.Control as="textarea" rows={3} placeholder="Напишите ваше сообщение" />
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={3}
+                                        placeholder="Напишите ваше сообщение"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleInputChange}
+                                    />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">
@@ -56,7 +96,6 @@ const Contact: React.FC = () => {
                             <Card.Text>
                                 Мы также активны в социальных сетях. Подписывайтесь на нас!
                             </Card.Text>
-                            {/* Добавьте ссылки на социальные сети */}
                         </Card.Body>
                     </Card>
                 </Col>
