@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link,  } from 'react-router-dom';
-import { Container, Card,  } from 'react-bootstrap';
+import {Container, Card, Spinner,} from 'react-bootstrap';
 
 interface Post {
     id: string;
@@ -27,7 +27,12 @@ const PostDetail: React.FC = () => {
     }, [id]);
 
     if (!post) {
-        return <div>Loading...</div>;
+        return (
+            <Container className="mt-5 text-center">
+                <Spinner animation="border" role="status" variant="primary">
+                </Spinner>
+            </Container>
+        )
     }
 
     return (
