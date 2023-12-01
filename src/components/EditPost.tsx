@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button} from 'react-bootstrap';
 
 interface Post {
     id: string;
@@ -28,7 +28,7 @@ const EditPost: React.FC = () => {
             })
             .catch(error => {
                 console.error('Error:', error);
-            });
+            })
     }, [id]);
 
     const handleUpdate = () => {
@@ -47,10 +47,7 @@ const EditPost: React.FC = () => {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log('Post updated successfully');
                     navigate(`/posts/${id}`);
-                } else {
-                    console.error('Error updating post:', response.status);
                 }
             })
             .catch(error => {
@@ -66,20 +63,13 @@ const EditPost: React.FC = () => {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log('Post deleted successfully');
                     navigate('/');
-                } else {
-                    console.error('Error deleting post:', response.status);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     };
-
-    if (!post) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <Container className="mt-5">

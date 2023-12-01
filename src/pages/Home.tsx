@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, } from 'react-bootstrap';
+import { Container, Card, Spinner } from 'react-bootstrap';
 
 interface Post {
     id: string;
@@ -11,9 +11,9 @@ interface Post {
 
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<Post[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Получаем данные с сервера Firebase для списка постов
         const firebaseUrl = 'https://dzhaparov-temirlan-js20-default-rtdb.europe-west1.firebasedatabase.app/posts.json';
 
         fetch(firebaseUrl)
@@ -29,8 +29,20 @@ const Home: React.FC = () => {
             })
             .catch(error => {
                 console.error('Error:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     }, []);
+
+    if (loading) {
+        return (
+            <Container className="mt-5 text-center">
+                <Spinner animation="border" role="status" variant="primary">
+                </Spinner>
+            </Container>
+        );
+    }
 
     return (
         <Container className="mt-5">
